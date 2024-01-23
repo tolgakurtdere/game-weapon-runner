@@ -1,25 +1,27 @@
-﻿using Sirenix.OdinInspector;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace TK.Manager
 {
     public class GameManager : SingletonBehaviour<GameManager>
     {
-        [SerializeField, Required] private Joystick joystick;
-
-        public static Joystick Joystick => Instance.joystick;
-
         protected override void Awake()
         {
             base.Awake();
+
+#if !UNITY_EDITOR && !TEST_MODE
+            Debug.unityLogger.logEnabled = false;
+#endif
+
             Application.targetFrameRate = 60;
         }
 
 #if UNITY_EDITOR
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Space)) Time.timeScale = 0;
-            if (Input.GetKeyDown(KeyCode.S)) Time.timeScale = 1;
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                Debug.Break();
+            }
         }
 #endif
     }

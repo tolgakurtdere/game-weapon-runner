@@ -1,14 +1,25 @@
+using TMPro;
 using UnityEngine;
 
-namespace WeaponRunner.Damageable
+namespace WeaponRunner
 {
     [RequireComponent(typeof(Collider))]
     public abstract class DamageableBase : MonoBehaviour, IDamageable
     {
-        [SerializeField, Min(1)] protected int initialHealth = 1;
+        [SerializeField, Min(1)] protected int initialHp = 1;
+        [SerializeField] protected TextMeshPro hpText;
         private Collider _collider;
+        private int _currentHp;
 
-        public virtual int Health { get; protected set; }
+        public virtual int Health
+        {
+            get => _currentHp;
+            protected set
+            {
+                _currentHp = value;
+                SetHpText();
+            }
+        }
 
         protected virtual void Awake()
         {
@@ -17,7 +28,15 @@ namespace WeaponRunner.Damageable
 
         protected virtual void Start()
         {
-            Health = initialHealth;
+            Health = initialHp;
+        }
+
+        protected virtual void SetHpText()
+        {
+            if (hpText)
+            {
+                hpText.SetText(Health.ToString());
+            }
         }
 
         public virtual void TakeDamage(int damage)

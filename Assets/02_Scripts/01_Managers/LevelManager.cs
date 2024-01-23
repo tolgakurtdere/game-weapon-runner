@@ -35,6 +35,14 @@ namespace TK.Manager
             LoadLevel();
         }
 
+        private void Update()
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                StartLevel();
+            }
+        }
+
         public void LoadLevel(bool nextLevel = false)
         {
             if (!levelPrefabs.Any()) return;
@@ -46,13 +54,15 @@ namespace TK.Manager
             var levelToLoad = _levels.GetElement(0);
             CurrentLevel = Instantiate(levelToLoad, Vector3.zero, Quaternion.identity, Thrash);
 
+            enabled = true;
             OnLevelLoaded?.Invoke();
         }
 
-        public static void StartLevel()
+        private void StartLevel()
         {
             if (IsPlaying) return;
             IsPlaying = true;
+            enabled = false;
 
             OnLevelStarted?.Invoke();
         }

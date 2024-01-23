@@ -42,13 +42,13 @@ namespace WeaponRunner
         }
 
         [SerializeField] private Upgradeable<float> fireRate;
-        [SerializeField] private Upgradeable<float> bulletDamage;
+        [SerializeField] private Upgradeable<int> bulletDamage;
         [SerializeField] private Upgradeable<float> bulletTravelSpeed;
         [SerializeField] private Upgradeable<BulletBouncingType> bulletBouncing;
         [SerializeField] private Upgradeable<AttackFormationType> attackFormation;
 
         public float FireRate => fireRate.Value;
-        public float BulletDamage => bulletDamage.Value;
+        public int BulletDamage => bulletDamage.Value;
         public float BulletTravelSpeed => bulletTravelSpeed.Value;
         public BulletBouncingType BulletBouncing => bulletBouncing.Value;
         public AttackFormationType AttackFormation => attackFormation.Value;

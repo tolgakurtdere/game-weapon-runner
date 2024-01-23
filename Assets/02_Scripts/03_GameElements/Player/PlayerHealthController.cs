@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace WeaponRunner.Player
 {
-    [RequireComponent(typeof(PlayerWrapper))]
     [RequireComponent(typeof(Collider))]
     public class PlayerHealthController : MonoBehaviour
     {
@@ -24,6 +23,14 @@ namespace WeaponRunner.Player
         private void Awake()
         {
             _collider = GetComponent<Collider>();
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.transform.TryGetComponent(out IDamageable damageable))
+            {
+                Die();
+            }
         }
 
         private void OnLevelLoaded()

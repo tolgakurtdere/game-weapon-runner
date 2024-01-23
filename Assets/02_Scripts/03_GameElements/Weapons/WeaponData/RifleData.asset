@@ -14,21 +14,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fireRate:
     values:
+    - 1.5
+    - 3
+    - 4
+    - 5
+    - 7
+  bulletDamage:
+    values: 010000000200000003000000
+  bulletTravelSpeed:
+    values:
     - 1
     - 1.5
     - 2
-    - 2.5
     - 3
-  bulletDamage:
-    values:
-    - 1
-    - 2
-    - 3
-  bulletTravelSpeed:
-    values:
-    - 10
-    - 15
-    - 20
   bulletBouncing:
     values: 000000000a00000014000000
   attackFormation:

@@ -19,23 +19,33 @@ namespace WeaponRunner.Player
         private void OnEnable()
         {
             LevelManager.OnLevelLoaded += OnLevelLoaded;
+            LevelManager.OnLevelStarted += OnLevelStarted;
             PlayerHealthController.OnPlayerDied += OnPlayerDied;
         }
 
         private void OnDisable()
         {
             LevelManager.OnLevelLoaded -= OnLevelLoaded;
+            LevelManager.OnLevelStarted -= OnLevelStarted;
             PlayerHealthController.OnPlayerDied -= OnPlayerDied;
         }
 
         private void OnLevelLoaded()
         {
-            Animator.SetBool(AnimatorParameters.Bools.IsDead, false);
+            Animator.SetLayerWeight(1, 1);
+            Animator.SetTrigger(AnimatorParameters.Triggers.Idle);
+        }
+
+        private void OnLevelStarted()
+        {
+            Animator.SetTrigger(AnimatorParameters.Triggers.Run);
+            Animator.SetTrigger(AnimatorParameters.Triggers.Fire);
         }
 
         private void OnPlayerDied()
         {
-            Animator.SetBool(AnimatorParameters.Bools.IsDead, true);
+            Animator.SetLayerWeight(1, 0);
+            Animator.SetTrigger(AnimatorParameters.Triggers.Die);
         }
     }
 }

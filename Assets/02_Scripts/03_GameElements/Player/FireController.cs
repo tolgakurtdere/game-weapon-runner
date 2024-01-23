@@ -6,43 +6,50 @@ using UnityEngine;
 
 namespace WeaponRunner.Player
 {
-    [RequireComponent(typeof(PlayerWrapper))]
     public class FireController : MonoBehaviour
     {
         [ShowInInspector, ReadOnly] private WeaponBase _equippedWeapon;
         [ShowInInspector, ReadOnly] private List<WeaponBase> _weapons;
-        private Animator _animator;
-        private PlayerWrapper _playerWrapper;
+        private bool _canFire;
 
         private void OnEnable()
         {
+            LevelManager.OnLevelStarted += OnLevelStarted;
             LevelManager.OnLevelStopped += OnLevelStopped;
         }
 
         private void OnDisable()
         {
+            LevelManager.OnLevelStarted -= OnLevelStarted;
             LevelManager.OnLevelStopped -= OnLevelStopped;
         }
 
         private void Awake()
         {
             _weapons = GetComponentsInChildren<WeaponBase>(true).ToList();
-            _playerWrapper = GetComponent<PlayerWrapper>();
 
-            _animator = _playerWrapper.AnimatorController.Animator;
             _equippedWeapon = _weapons[0];
-
             _weapons.ForEach(w => w.Deactivate());
             _equippedWeapon.Activate();
         }
 
-        private void OnLevelStopped(bool isSuccess)
+        private void OnLevelStarted()
         {
-            _animator.SetBool(AnimatorParameters.Bools.IsFiring, false);
+            _canFire = true;
         }
 
-        private void Update()
+        private void OnLevelStopped(bool isSuccess)
         {
+            _canFire = false;
+        }
+
+        private void LateUpdate()
+        {
+            if (!_canFire)
+            {
+                return;
+            }
+
             _equippedWeapon.FireIfPossible();
         }
 
@@ -58,12 +65,10 @@ namespace WeaponRunner.Player
             if (_equippedWeapon)
             {
                 _equippedWeapon.Deactivate();
-                // _animator.SetBool(_equippedWeapon.Data.AnimationParameter, false);
             }
 
             _equippedWeapon = newWeapon;
             _equippedWeapon.Activate();
-            // _animator.SetBool(_equippedWeapon.Data.AnimationParameter, true);
         }
     }
 }
