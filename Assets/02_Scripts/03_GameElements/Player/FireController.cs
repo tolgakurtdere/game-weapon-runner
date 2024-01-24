@@ -33,16 +33,6 @@ namespace WeaponRunner.Player
             _equippedWeapon.Activate();
         }
 
-        private void OnLevelStarted(int levelNo)
-        {
-            _canFire = true;
-        }
-
-        private void OnLevelStopped(int levelNo, bool isSuccess)
-        {
-            _canFire = false;
-        }
-
         // LateUpdate because fire action should be happened after animation changes
         private void LateUpdate()
         {
@@ -54,12 +44,31 @@ namespace WeaponRunner.Player
             _equippedWeapon.FireIfPossible();
         }
 
-        private void OnWeaponSelected(WeaponData selectedWeapon)
+        private void OnTriggerEnter(Collider other)
         {
-            var newWeapon = _weapons.FirstOrDefault(w => w.Data == selectedWeapon);
+            if (other.transform.TryGetComponent(out Gate gate))
+            {
+                gate.gameObject.SetActive(false);
+                ChangeWeapon(gate.WeaponData);
+            }
+        }
+
+        private void OnLevelStarted(int levelNo)
+        {
+            _canFire = true;
+        }
+
+        private void OnLevelStopped(int levelNo, bool isSuccess)
+        {
+            _canFire = false;
+        }
+
+        private void ChangeWeapon(WeaponData weaponData)
+        {
+            var newWeapon = _weapons.FirstOrDefault(w => w.Data == weaponData);
             if (!newWeapon)
             {
-                Debug.LogError("WeaponData could not get found! : " + selectedWeapon);
+                Debug.LogError($"WeaponData could not get found! : {weaponData}");
                 return;
             }
 
