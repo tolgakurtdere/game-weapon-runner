@@ -59,15 +59,23 @@ namespace WeaponRunner
                     Fire(Quaternion.Euler(0, -30, 0) * defaultDirection, bulletParameters);
                     break;
                 case AttackFormationType.TripleDouble:
+                    Fire(defaultDirection, bulletParameters, 0.05f);
+                    Fire(defaultDirection, bulletParameters, -0.05f);
+                    Fire(Quaternion.Euler(0, 30, 0) * defaultDirection, bulletParameters);
+                    Fire(Quaternion.Euler(0, -30, 0) * defaultDirection, bulletParameters);
+                    Fire(Quaternion.Euler(0, 20, 0) * defaultDirection, bulletParameters);
+                    Fire(Quaternion.Euler(0, -20, 0) * defaultDirection, bulletParameters);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
         }
 
-        private void Fire(Vector3 direction, Bullet.BulletParameters parameters)
+        private void Fire(Vector3 direction, Bullet.BulletParameters parameters, float muzzleOffset = 0f)
         {
-            var bullet = LeanPool.Spawn(bulletPrefab, muzzle.position, Quaternion.identity);
+            var position = muzzle.position;
+            position.x += muzzleOffset;
+            var bullet = LeanPool.Spawn(bulletPrefab, position, Quaternion.identity);
             bullet.Fire(direction, parameters);
         }
 
