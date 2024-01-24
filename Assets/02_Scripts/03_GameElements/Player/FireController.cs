@@ -14,12 +14,14 @@ namespace WeaponRunner.Player
 
         private void OnEnable()
         {
+            LevelManager.OnLevelLoaded += OnLevelLoaded;
             LevelManager.OnLevelStarted += OnLevelStarted;
             LevelManager.OnLevelStopped += OnLevelStopped;
         }
 
         private void OnDisable()
         {
+            LevelManager.OnLevelLoaded -= OnLevelLoaded;
             LevelManager.OnLevelStarted -= OnLevelStarted;
             LevelManager.OnLevelStopped -= OnLevelStopped;
         }
@@ -51,6 +53,13 @@ namespace WeaponRunner.Player
                 gate.gameObject.SetActive(false);
                 ChangeWeapon(gate.WeaponData);
             }
+        }
+
+        private void OnLevelLoaded(int levelNo)
+        {
+            _equippedWeapon.Deactivate();
+            _equippedWeapon = _weapons[0];
+            _equippedWeapon.Activate();
         }
 
         private void OnLevelStarted(int levelNo)

@@ -94,14 +94,14 @@ namespace WeaponRunner.Player
             // This part is not well planned, I prefer to use one of the spline packages in general
             var upgradeCounter = 0;
             _movementType = MovementType.Translate;
-            _movementTween = splineFollower.DOMoveZ(5, 1f)
+            _movementTween = splineFollower.DOMoveZ(8, 1f)
                 .SetRelative()
                 .SetSpeedBased()
                 .SetEase(Ease.Linear)
-                .SetLoops(20, LoopType.Incremental)
+                .SetLoops(12, LoopType.Incremental)
                 .OnStepComplete(() =>
                 {
-                    if (upgradeCounter >= 10)
+                    if (upgradeCounter >= 8)
                     {
                         return;
                     }
