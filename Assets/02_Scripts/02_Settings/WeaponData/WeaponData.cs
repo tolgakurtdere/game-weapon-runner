@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using WeaponRunner.Player;
 
 namespace WeaponRunner
 {
@@ -21,7 +22,7 @@ namespace WeaponRunner
     [CreateAssetMenu(fileName = "WeaponData", menuName = "TK/Weapon Runner/Weapon Data")]
     public class WeaponData : ScriptableObject
     {
-        [Serializable]
+        /*[Serializable]
         private class Upgradeable<T>
         {
             [SerializeField] private List<T> values;
@@ -39,23 +40,30 @@ namespace WeaponRunner
 
                 _upgradeIndex++;
             }
-        }
+        }*/
 
-        [SerializeField] private Upgradeable<float> fireRate;
-        [SerializeField] private Upgradeable<int> bulletDamage;
-        [SerializeField] private Upgradeable<float> bulletTravelSpeed;
-        [SerializeField] private Upgradeable<BulletBouncingType> bulletBouncing;
-        [SerializeField] private Upgradeable<AttackFormationType> attackFormation;
+        [SerializeField] private List<float> fireRate;
+        [SerializeField] private List<int> bulletDamage;
+        [SerializeField] private List<float> bulletTravelSpeed;
+        [SerializeField] private List<BulletBouncingType> bulletBouncing;
+        [SerializeField] private List<AttackFormationType> attackFormation;
 
-        public float FireRate => fireRate.Value;
-        public int BulletDamage => bulletDamage.Value;
-        public float BulletTravelSpeed => bulletTravelSpeed.Value;
-        public BulletBouncingType BulletBouncing => bulletBouncing.Value;
-        public AttackFormationType AttackFormation => attackFormation.Value;
+        public float FireRate =>
+            fireRate[Mathf.Clamp(PlayerUpgradeController.FireRateUpgradeIndex, 0, fireRate.Count - 1)];
 
-        public void UpgradeFireRate()
-        {
-            fireRate.Upgrade();
-        }
+        public int BulletDamage =>
+            bulletDamage[Mathf.Clamp(PlayerUpgradeController.BulletDamageUpgradeIndex, 0, bulletDamage.Count - 1)];
+
+        public float BulletTravelSpeed =>
+            bulletTravelSpeed[
+                Mathf.Clamp(PlayerUpgradeController.BulletTravelSpeedUpgradeIndex, 0, bulletTravelSpeed.Count - 1)];
+
+        public BulletBouncingType BulletBouncing =>
+            bulletBouncing
+                [Mathf.Clamp(PlayerUpgradeController.BulletBouncingUpgradeIndex, 0, bulletBouncing.Count - 1)];
+
+        public AttackFormationType AttackFormation =>
+            attackFormation[
+                Mathf.Clamp(PlayerUpgradeController.AttackFormationUpgradeIndex, 0, attackFormation.Count - 1)];
     }
 }

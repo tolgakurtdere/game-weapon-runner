@@ -13,21 +13,16 @@ MonoBehaviour:
   m_Name: ShotgunData
   m_EditorClassIdentifier: 
   fireRate:
-    values:
-    - 1
-    - 1.5
-    - 2
-    - 2.5
-    - 3
-  bulletDamage:
-    values: 030000000500000007000000
+  - 1
+  - 1.5
+  - 2
+  - 2.5
+  - 3
+  bulletDamage: 030000000500000007000000
   bulletTravelSpeed:
-    values:
-    - 0.5
-    - 1
-    - 1.5
-    - 2
-  bulletBouncing:
-    values: 000000000a00000014000000
-  attackFormation:
-    values: 000000000a00000014000000
+  - 0.5
+  - 1
+  - 1.5
+  - 2
+  bulletBouncing: 000000000a00000014000000
+  attackFormation: 000000000a00000014000000

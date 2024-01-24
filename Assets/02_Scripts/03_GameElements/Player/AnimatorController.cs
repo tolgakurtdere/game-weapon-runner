@@ -30,13 +30,13 @@ namespace WeaponRunner.Player
             PlayerHealthController.OnPlayerDied -= OnPlayerDied;
         }
 
-        private void OnLevelLoaded()
+        private void OnLevelLoaded(int levelNo)
         {
             Animator.SetLayerWeight(1, 1);
             Animator.SetTrigger(AnimatorParameters.Triggers.Idle);
         }
 
-        private void OnLevelStarted()
+        private void OnLevelStarted(int levelNo)
         {
             Animator.SetTrigger(AnimatorParameters.Triggers.Run);
             Animator.SetTrigger(AnimatorParameters.Triggers.Fire);

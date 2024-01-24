@@ -33,16 +33,17 @@ namespace WeaponRunner.Player
             _equippedWeapon.Activate();
         }
 
-        private void OnLevelStarted()
+        private void OnLevelStarted(int levelNo)
         {
             _canFire = true;
         }
 
-        private void OnLevelStopped(bool isSuccess)
+        private void OnLevelStopped(int levelNo, bool isSuccess)
         {
             _canFire = false;
         }
 
+        // LateUpdate because fire action should be happened after animation changes
         private void LateUpdate()
         {
             if (!_canFire)

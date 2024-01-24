@@ -33,7 +33,7 @@ namespace WeaponRunner.Player
             }
         }
 
-        private void OnLevelLoaded()
+        private void OnLevelLoaded(int levelNo)
         {
             _collider.enabled = true;
         }
@@ -42,7 +42,7 @@ namespace WeaponRunner.Player
         {
             _collider.enabled = false;
 
-            LevelManager.StopLevel(false);
+            LevelManager.Instance.StopLevel(false);
 
             OnPlayerDied?.Invoke();
         }

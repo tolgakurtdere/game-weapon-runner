@@ -36,7 +36,7 @@ namespace WeaponRunner.Player
             LevelManager.OnLevelStopped -= OnLevelStopped;
         }
 
-        private void OnLevelStopped(bool isSuccess)
+        private void OnLevelStopped(int levelNo, bool isSuccess)
         {
             StopMovement();
             joystick.OnPointerUp(null);
@@ -50,7 +50,7 @@ namespace WeaponRunner.Player
             Move(joystickDirection);
         }
 
-        private void OnLevelLoaded()
+        private void OnLevelLoaded(int levelNo)
         {
             var tr = transform;
 
@@ -64,11 +64,10 @@ namespace WeaponRunner.Player
             tr.localRotation = Quaternion.identity;
         }
 
-        private void OnLevelStarted()
+        private void OnLevelStarted(int levelNo)
         {
             StartMovement();
         }
-
 
         private void Move(Vector2 delta)
         {
@@ -102,7 +101,7 @@ namespace WeaponRunner.Player
             _movementTween = splineFollower.DOMoveZ(100, 1f)
                 .SetSpeedBased()
                 .SetEase(Ease.Linear)
-                .OnComplete(() => { LevelManager.StopLevel(true); });
+                .OnComplete(() => { LevelManager.Instance.StopLevel(true); });
         }
 
         private void StopMovement()
