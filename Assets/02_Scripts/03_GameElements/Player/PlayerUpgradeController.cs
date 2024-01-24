@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using TK.Manager;
 using UnityEngine;
 
@@ -5,11 +7,15 @@ namespace WeaponRunner.Player
 {
     public class PlayerUpgradeController : MonoBehaviour
     {
-        public static int FireRateUpgradeIndex { get; private set; }
-        public static int BulletDamageUpgradeIndex { get; private set; }
-        public static int BulletTravelSpeedUpgradeIndex { get; private set; }
-        public static int BulletBouncingUpgradeIndex { get; private set; }
-        public static int AttackFormationUpgradeIndex { get; private set; }
+        private static readonly Dictionary<UpgradeType, int> UpgradeIndexDictionary = new();
+
+        private void Awake()
+        {
+            foreach (UpgradeType upgradeType in Enum.GetValues(typeof(UpgradeType)))
+            {
+                UpgradeIndexDictionary.Add(upgradeType, 0);
+            }
+        }
 
         private void OnEnable()
         {
@@ -23,11 +29,21 @@ namespace WeaponRunner.Player
 
         private void OnLevelLoaded(int levelNo)
         {
-            FireRateUpgradeIndex = 0;
-            BulletDamageUpgradeIndex = 0;
-            BulletTravelSpeedUpgradeIndex = 0;
-            BulletBouncingUpgradeIndex = 0;
-            AttackFormationUpgradeIndex = 0;
+            foreach (UpgradeType upgradeType in Enum.GetValues(typeof(UpgradeType)))
+            {
+                UpgradeIndexDictionary[upgradeType] = 0;
+            }
+        }
+
+        public static int Get(UpgradeType upgradeType)
+        {
+            return UpgradeIndexDictionary[upgradeType];
+        }
+
+        public static void Upgrade(UpgradeType upgradeType)
+        {
+            UpgradeIndexDictionary[upgradeType]++;
+            Debug.Log($"Upgraded! : {upgradeType}");
         }
     }
 }

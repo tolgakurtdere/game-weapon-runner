@@ -49,21 +49,20 @@ namespace WeaponRunner
         [SerializeField] private List<AttackFormationType> attackFormation;
 
         public float FireRate =>
-            fireRate[Mathf.Clamp(PlayerUpgradeController.FireRateUpgradeIndex, 0, fireRate.Count - 1)];
+            fireRate[Mathf.Clamp(PlayerUpgradeController.Get(UpgradeType.FireRate), 0, fireRate.Count - 1)];
 
         public int BulletDamage =>
-            bulletDamage[Mathf.Clamp(PlayerUpgradeController.BulletDamageUpgradeIndex, 0, bulletDamage.Count - 1)];
+            bulletDamage[Mathf.Clamp(PlayerUpgradeController.Get(UpgradeType.BulletDamage), 0, bulletDamage.Count - 1)];
 
         public float BulletTravelSpeed =>
             bulletTravelSpeed[
-                Mathf.Clamp(PlayerUpgradeController.BulletTravelSpeedUpgradeIndex, 0, bulletTravelSpeed.Count - 1)];
+                Mathf.Clamp(PlayerUpgradeController.Get(UpgradeType.BulletTravelSpeed), 0,
+                    bulletTravelSpeed.Count - 1)];
 
-        public BulletBouncingType BulletBouncing =>
-            bulletBouncing
-                [Mathf.Clamp(PlayerUpgradeController.BulletBouncingUpgradeIndex, 0, bulletBouncing.Count - 1)];
+        public BulletBouncingType BulletBouncing => bulletBouncing[
+            Mathf.Clamp(PlayerUpgradeController.Get(UpgradeType.BulletBouncing), 0, bulletBouncing.Count - 1)];
 
-        public AttackFormationType AttackFormation =>
-            attackFormation[
-                Mathf.Clamp(PlayerUpgradeController.AttackFormationUpgradeIndex, 0, attackFormation.Count - 1)];
+        public AttackFormationType AttackFormation => attackFormation[
+            Mathf.Clamp(PlayerUpgradeController.Get(UpgradeType.AttackFormation), 0, attackFormation.Count - 1)];
     }
 }

@@ -4,6 +4,16 @@ namespace TK.Manager
 {
     public class GameManager : SingletonBehaviour<GameManager>
     {
+        public static float TimeScale
+        {
+            get => Time.timeScale;
+            set
+            {
+                Time.timeScale = value;
+                Debug.Log("TimeScale is changed! : " + value);
+            }
+        }
+
         protected override void Awake()
         {
             base.Awake();

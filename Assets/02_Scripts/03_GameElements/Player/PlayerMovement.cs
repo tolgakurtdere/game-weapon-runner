@@ -20,7 +20,6 @@ namespace WeaponRunner.Player
         [ShowInInspector, ReadOnly] private MovementType _movementType = MovementType.CannotMove;
         private const int LOCAL_POSITION_X_BORDER = 2;
         private Tween _movementTween;
-        private bool _canMove = true;
 
         private void OnEnable()
         {
@@ -44,24 +43,19 @@ namespace WeaponRunner.Player
 
         private void Update()
         {
-            if (!_canMove) return;
-
-            var joystickDirection = joystick.Direction;
-            Move(joystickDirection);
+            Move(joystick.Direction);
         }
 
         private void OnLevelLoaded(int levelNo)
         {
-            var tr = transform;
-
             _movementType = MovementType.CannotMove;
             splineFollower.DOKill();
-            tr.DOKill();
+            transform.DOKill();
 
             splineFollower.position = Vector3.zero;
             splineFollower.rotation = Quaternion.identity;
-            tr.localPosition = Vector3.zero;
-            tr.localRotation = Quaternion.identity;
+            transform.localPosition = Vector3.zero;
+            transform.localRotation = Quaternion.identity;
         }
 
         private void OnLevelStarted(int levelNo)
@@ -92,15 +86,29 @@ namespace WeaponRunner.Player
             transform.localPosition = Vector3.MoveTowards(
                 transform.localPosition,
                 targetLocalPos,
-                5 * Time.deltaTime);
+                4 * Time.deltaTime);
         }
 
         private void StartMovement()
         {
+            // This part is not well planned, I prefer to use one of the spline packages in general
+            var upgradeCounter = 0;
             _movementType = MovementType.Translate;
-            _movementTween = splineFollower.DOMoveZ(100, 1f)
+            _movementTween = splineFollower.DOMoveZ(5, 1f)
+                .SetRelative()
                 .SetSpeedBased()
                 .SetEase(Ease.Linear)
+                .SetLoops(20, LoopType.Incremental)
+                .OnStepComplete(() =>
+                {
+                    if (upgradeCounter >= 10)
+                    {
+                        return;
+                    }
+
+                    UIManager.Instance.UpgradeUI.Show();
+                    upgradeCounter++;
+                })
                 .OnComplete(() => { LevelManager.Instance.StopLevel(true); });
         }
 

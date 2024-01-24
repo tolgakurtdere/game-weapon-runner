@@ -43,7 +43,6 @@ namespace WeaponRunner.Player
             _collider.enabled = false;
 
             LevelManager.Instance.StopLevel(false);
-
             OnPlayerDied?.Invoke();
         }
     }

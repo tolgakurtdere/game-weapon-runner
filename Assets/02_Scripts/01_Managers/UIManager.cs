@@ -1,5 +1,6 @@
 using TK.UI;
 using UnityEngine;
+using WeaponRunner;
 
 namespace TK.Manager
 {
@@ -9,6 +10,9 @@ namespace TK.Manager
         [SerializeField] private GameUI gameUI;
         [SerializeField] private LevelCompletedUI levelCompletedUI;
         [SerializeField] private LevelFailedUI levelFailedUI;
+        [SerializeField] private UpgradeUI upgradeUI;
+
+        public UpgradeUI UpgradeUI => upgradeUI;
 
         private void OnEnable()
         {

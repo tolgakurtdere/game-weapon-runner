@@ -55,8 +55,8 @@ namespace WeaponRunner
                     break;
                 case AttackFormationType.Triple:
                     Fire(defaultDirection, bulletParameters);
-                    Fire(Quaternion.Euler(0, 10, 0) * defaultDirection, bulletParameters);
-                    Fire(Quaternion.Euler(0, -10, 0) * defaultDirection, bulletParameters);
+                    Fire(Quaternion.Euler(0, 30, 0) * defaultDirection, bulletParameters);
+                    Fire(Quaternion.Euler(0, -30, 0) * defaultDirection, bulletParameters);
                     break;
                 case AttackFormationType.TripleDouble:
                     break;

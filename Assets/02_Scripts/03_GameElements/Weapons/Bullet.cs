@@ -16,7 +16,7 @@ namespace WeaponRunner
             public BulletBouncingType BouncingType;
         }
 
-        private const int FIRE_FORCE_MULTIPLIER = 1000;
+        private const int FIRE_FORCE_MULTIPLIER = 500;
         private const float LIFETIME = 1f;
         private Rigidbody _rigidbody;
         private TimerBehaviour _timerBehaviour;
